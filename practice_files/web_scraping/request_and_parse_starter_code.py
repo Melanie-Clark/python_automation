@@ -1,19 +1,16 @@
-# import relevant libraries
 import requests
 from bs4 import BeautifulSoup
 
-# define the url
-# FILL IN before running the code
-url = "FILL IN"
+url = "https://www.agilityplaza.com/agilityClass/1478531665/results"
 
-# send a request to get html code from that url
-# uncomment the following line and replace with your code
-# response = FILL IN
+# send a GET request to get html code from that url
+# The Accept header specifies that we want an HTML response
+response = requests.get(url, headers={"Accept": "text/html"})
+# print(response) # [200]
+# print("=============================")
 
-# parse the response
-# uncomment the following line and replace with your code
-# parsed_response = FILL IN
+# parse the HTML response
+parsed_response = BeautifulSoup(response.text, "html.parser")
 
 # format the parsed HTML response in a way that’s easier to read and print it out
-# uncomment the following line before running the code
-# print(parsed_response.prettify())
+print(parsed_response.prettify())
