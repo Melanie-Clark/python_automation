@@ -1,35 +1,38 @@
-# import relevant libraries
 import requests 
+
+# BeautifulSoup is for static HTML 
 from bs4 import BeautifulSoup
 from time import sleep
 
 # for loop to iterate over the range of page numbers you want to scrape from
-# note: python includes the first argument and excludes the second argument in the range function
-for page_number in range(1,4):
+for page_number in range(1,6):
 
-    # define the url
-    url = "FILL IN"+str(page_number)
+  url = "https://www.petsathome.com/campaigns/listing/dog-treats-offers?page="+str(page_number)
 
-    # send a request to get html code from that url
-    response = requests.get(url, headers={"Accept": "text/html"}) 
+  # send a request to get html code from that url
+  response = requests.get(url, headers={"Accept": "text/html"}) 
 
-    # parse the response
-    parsed_response = BeautifulSoup(response.text, "html.parser") 
+  # parse the response
+  parsed_response = BeautifulSoup(response.text, "html.parser") 
 
-    # extract all the elements specific to book titles from that page
-    title_elements = parsed_response.find_all("a", class_="block__item-title")
+  # extract ALL the dog treat names from that page
+  dog_treat_elements = parsed_response.find_all("h3", class_="product-info_title__2XVM2 type-w-bold")
 
-    # extract all the elements specific to book authors from that page
-    author_elements = parsed_response.find_all("a", class_="block__item-author")
+  # extract ALL the prices specific to the dog treats from that page
+  dog_treat_price_elements = parsed_response.find_all("p", class_="product-price_price__ukg_k")
 
-    # print out the page number 
-    print("\nPage Number:", page_number)
+  # print out the page number 
+  print("\nPage Number:", page_number)
 
-    # print out the book titles appearing on that page after formatting the text 
-    print("\nBook Titles:", list(map(lambda x: x.text.strip(), title_elements)))
+  # print out the dog treat names on the page after formatting the text 
+  """
+  map() applies the function to every item in the list
+  For each element x, it gets the text and strips whitespace
+  """
+  print("\nDog Treat:", list(map(lambda x: x.text.strip(), dog_treat_elements)))
 
-    # print out the book authors appearing on that page after formatting the text 
-    print("\nBook Authors:", list(map(lambda x: x.text.strip(), author_elements)))
+  # print out the book authors appearing on that page after formatting the text 
+  print("\nPrice:", list(map(lambda x: x.text.strip(), dog_treat_price_elements)))
 
-    # pause the program for 1 second between iterations of the loop
-    sleep(1)
+  # pause the program for 1 second between iterations of the loop
+  sleep(1)
