@@ -1,9 +1,7 @@
-# import all necessary libraries
 import requests 
 from bs4 import BeautifulSoup 
 
-# define url of webpage to scrape from
-url = "https://www.feedbooks.com/search?cat=FBFIC016000&query=feedbooks"
+url = "https://www.petsathome.com/campaigns/listing/dog-treats-offers"
 
 # send a request to get html code from the url and save the response 
 response = requests.get(url, headers={"Accept": "text/html"}) 
@@ -11,9 +9,9 @@ response = requests.get(url, headers={"Accept": "text/html"})
 # use BeautifulSoup to parse the text from the response 
 parsed_response = BeautifulSoup(response.text, "html.parser") 
 
-# find all book titles 
-# uncomment the following line of code and FILL IN
-# titles = FILL IN
+# find all dog treats
+dog_treats = parsed_response.find_all("h3", class_="product-info_title__2XVM2 type-w-bold")
 
 # iterate over the titles and print the text for each
-# write your code below
+for treat_name in dog_treats:
+    print(treat_name.text)
